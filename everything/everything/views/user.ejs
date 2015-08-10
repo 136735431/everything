@@ -1,14 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title><%= title%></title>
-</head>
-<body>
-    <ul>
+<% include header%>
+    <table class="table table-striped  table-hover ">
+        <thead>
+        <tr>
+            <td>用户ID</td>
+            <td>用户名</td>
+            <td>邮件</td>
+            <td>手机</td>
+            <td>注册时间</td>
+            <td>操作</td>
+        </tr>
+        </thead>
+        <tbody>
         <% for(var i=0; i < userList.length;i++){ %>
-            <li><%= userList[i].username%></li>
+            <tr>
+                <td><%= userList[i]._id%></td>
+                <td><%= userList[i].username%></td>
+                <td><%= userList[i].email%></td>
+                <td><%= userList[i].phone%></td>
+                <td><%= (userList[i].date)%></td>
+                <td><a href="javascript:;" onclick="delData('<%= userList[i]._id%>');" class="btn btn-warning">删除</a></td>
+            </tr>
         <% }%>
-    </ul>
-</body>
-</html>
+        </tbody>
+    </table>
+<div>
+</div>
+
+<script>
+    function delData(id){
+        $.ajax({
+            url:"/user",
+            type:"DELETE",
+            data:{id:id},
+            dataType:"json",
+            success:function(json){
+                if(json){
+                    var obj = eval(json);
+                    if(obj.code == 0){
+                        layer.alert("success",{icon: 6},function(){
+                            window.location.href=window.location.href;
+                        });
+                    }else{
+                        layer.msg(obj.message);
+                    }
+                }
+            }
+        });
+    }
+</script>
+<% include footer%>

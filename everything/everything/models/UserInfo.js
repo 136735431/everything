@@ -1,10 +1,10 @@
 /**
  * Created by admin on 2015/8/9.
  */
-var config = require("../config.js");
-var mongoose = require('mongoose');
-var db = mongoose.createConnection(config.mongodb);
-db.on('error',console.error.bind(console,'Á¬½Ó´íÎó:'));
+
+var mongodb = require("./MongoDb.js");
+var mongoose = mongodb.mongoose;
+var db = mongodb.db;
 
 var UserInfoSchema = new mongoose.Schema({
     username:String,
@@ -27,5 +27,10 @@ function list(callback){
     });
 }
 
+function remove(id,callback){
+    userInfoModel.remove({_id:id},callback);
+}
+
 module.exports.save =save;
 module.exports.list = list;
+module.exports.remove=remove;
