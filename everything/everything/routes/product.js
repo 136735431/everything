@@ -7,6 +7,7 @@ var dateConvert = require("../commontool/dateConvert.js");
 module.exports.delProduct=delProduct;
 module.exports.getList=getList;
 module.exports.addProduct=addProduct;
+module.exports.getProductList=getProductList;
 
 function getList(req,res){
     product.list(function(err,list){
@@ -25,7 +26,24 @@ function getList(req,res){
             res.send(err.message);
         }
     });
+}
 
+function getProductList(req,res){
+    product.list(function(err,list){
+        if(!err){
+            var plist = new Array();
+            list.forEach(function(value){
+                var r = dateConvert.dataParse(value.createdate);
+                value.date = r;
+                plist.push(value);
+            });
+
+            res.send({code:0,data:plist});
+        }else
+        {
+            res.send({code:1,message:err.message});
+        }
+    });
 }
 
 function delProduct(req,res){

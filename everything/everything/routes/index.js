@@ -29,5 +29,13 @@ module.exports = function (app) {
 	app.post("/list",function(req,res){
 		product.addProduct(req,res);
 	});
+
+	app.get("/plist",function(req,res){
+		res.render("plist",{title:"angularjs 初体验"});
+	});
+
+	app.get("/productlist",function(req,res){
+		product.getProductList(req,res);
+	})
 };
 
