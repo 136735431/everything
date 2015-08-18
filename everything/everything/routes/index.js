@@ -6,6 +6,8 @@ var product = require("./product");
 
 
 module.exports = function (app) {
+
+
 	app.get('/', function (req, res) {
 		user.register(req,res);
 		res.render('index', { title: 'Express' });
@@ -36,6 +38,6 @@ module.exports = function (app) {
 
 	app.get("/productlist",function(req,res){
 		product.getProductList(req,res);
-	})
+	});
 };
 
